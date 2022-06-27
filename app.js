@@ -35,7 +35,14 @@ app.get("/compose", (req, res) => {
 })
 
 app.get("/posts/:postsId", (req, res)=>{
-  console.log(req.params.postsId)
+  let reqPost = req.params.postsId
+  posts.forEach(function(post){
+    if(post.title===reqPost){
+      console.log("Match Found!")
+    }else{
+      console.log("No Match");
+    }
+  })
 })
 
 app.post("/compose", (req, res) => {
