@@ -7,9 +7,9 @@ const _ = require("lodash")
 const msg = "Requested post does not exists"
 
 truncate_string = function (str1, length) {
-  
-  if ((str1.constructor === String) && (length>0)) {
-      return str1.slice(0, length);
+
+  if ((str1.constructor === String) && (length > 0)) {
+    return str1.slice(0, length);
   }
 };
 
@@ -31,7 +31,7 @@ app.use(express.static("public"));
 
 
 app.get('/', (req, res) => {
-  res.render("home", { homeContent: homeStartingContent, posts:homePost})
+  res.render("home", { homeContent: homeStartingContent, posts: homePost })
 })
 
 app.get('/about', (req, res) => {
@@ -45,15 +45,15 @@ app.get("/compose", (req, res) => {
   res.render("compose")
 })
 
-app.get("/posts/:postsId", (req, res)=>{
+app.get("/posts/:postsId", (req, res) => {
   const reqPost = _.kebabCase(req.params.postsId)
 
-  posts.forEach(function(post){
-    if(_.kebabCase(post.title)===reqPost){
-      res.render("post", {post:post})
+  posts.forEach(function (post) {
+    if (_.kebabCase(post.title) === reqPost) {
+      res.render("post", { post: post })
     }
   })
-  res.render("error",{msg:msg})
+  res.render("error", { msg: msg })
 
 })
 
@@ -64,13 +64,13 @@ app.post("/compose", (req, res) => {
   }
   posts.push(post)
   let trunc = ''
-  if(req.body.postBody.length>100){
-    trunc = truncate_string(req.body.postBody,100) + "...";
-  }else{
+  if (req.body.postBody.length > 100) {
+    trunc = truncate_string(req.body.postBody, 100) + "...";
+  } else {
     trunc = req.body.postBody;
   }
   homePost.push({
-    title:req.body.postTitle,
+    title: req.body.postTitle,
     content: trunc
   })
   res.redirect("/")
